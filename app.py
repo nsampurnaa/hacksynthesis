@@ -1,36 +1,43 @@
 import streamlit as st
 from llm import ask_llm
 
-st.set_page_config(page_title="HackSynthesis: Autism Care Assistant 🤖", page_icon="🤖")
+st.set_page_config(page_title="MindPal: Autism Care Chatbot 🤖", page_icon="🤖")
+st.title("MindPal: Autism Care Chatbot 🤖")
+st.markdown("The AI will ask questions about your child and suggest care strategies based on the conversation.")
 
-st.title("HackSynthesis: Autism Care Assistant 🤖")
-st.markdown(
-    "Enter your observations about a child’s behavior or symptoms, and the AI will suggest autism care strategies."
-)
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+if "conversation_active" not in st.session_state:
+    st.session_state.conversation_active = True
 
+def get_ai_prompt(chat_history):
+    conversation_text = ""
+    for msg in chat_history:
+        conversation_text += f"{msg['role'].capitalize()}: {msg['content']}\n"
+    prompt = f"""
+You are an expert autism care assistant. You are talking to a parent to determine if their child has autism.
+Ask questions step by step, wait for the user's response, and gradually assess autism severity (mild, moderate, severe).
+After enough information, give a conclusion and 3-5 practical strategies. 
 
-user_input = st.text_area("Describe the child's behavior or concerns:", height=150)
-
-if st.button("Get AI Suggestions") and user_input.strip():
-    with st.spinner("Analyzing..."):
-      
-        prompt_detection = f"""
-You are an expert in child psychology. Based on the following observations, classify the autism level as 'mild', 'moderate', or 'severe', and briefly explain why:
-
-Observations:
-{user_input}
+Conversation so far:
+{conversation_text}
+AI:
 """
-        autism_level_response = ask_llm(prompt_detection)
+    return prompt
 
-    
-        prompt_care = f"""
-You are an autism care assistant. The child is classified as: {autism_level_response}.
-Provide 3-5 practical, parent-friendly strategies to support the child.
-"""
-        care_suggestions = ask_llm(prompt_care)
+for msg in st.session_state.chat_history:
+    if msg["role"] == "user":
+        st.markdown(f"**You:** {msg['content']}")
+    else:
+        st.markdown(f"**AI:** {msg['content']}")
 
-    st.subheader("🧩 Autism Level Detection:")
-    st.write(autism_level_response)
-
-    st.subheader("📌 Suggested Care Strategies:")
-    st.write(care_suggestions)
+if st.session_state.conversation_active:
+    user_input = st.text_input("Your response:", key="user_input")
+    if user_input:
+        st.session_state.chat_history.append({"role": "user", "content": user_input})
+        prompt = get_ai_prompt(st.session_state.chat_history)
+        ai_response = ask_llm(prompt)
+        st.session_state.chat_history.append({"role": "ai", "content": ai_response})
+        if any(keyword in ai_response.lower() for keyword in ["conclusion:", "autism level:", "strategies:"]):
+            st.session_state.conversation_active = False
+        st.experimental_rerun()
