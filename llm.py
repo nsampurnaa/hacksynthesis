@@ -1,24 +1,26 @@
 import os
 import requests
-
-API_URL = "https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2"
-headers = {"Authorization": f"Bearer {os.getenv('HUGGINGFACEHUB_API_TOKEN')}"}
+API_URL = "https://openrouter.ai/api/v1/chat/completions"
+headers = {
+    "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
+    "Content-Type": "application/json"
+}
 
 def ask_llm(prompt: str) -> str:
-    payload = {"inputs": prompt}
     try:
-        response = requests.post(API_URL, headers=headers, json=payload, timeout=60)
-        response.raise_for_status()  # raise error if status != 200
-        data = response.json()
+        payload = {
+            "model": "mistralai/mistral-7b-instruct:free",
+            "messages": [
+                {"role": "system", "content": "You are an assistant that helps parents with autism care strategies."},
+                {"role": "user", "content": prompt}
+            ]
+        }
 
-        # Sometimes HF returns an error in JSON format
-        if isinstance(data, dict) and "error" in data:
-            return f"⚠️ API Error: {data['error']}"
-        
-        return data[0]["generated_text"]
+        resp = requests.post(API_URL, headers=headers, json=payload)
+        resp.raise_for_status()
+        data = resp.json()
 
-    except requests.exceptions.RequestException as e:
-        return f"⚠️ Request failed: {str(e)}"
-    except ValueError:
-        # JSON decode failed
-        return f"⚠️ Failed to parse response: {response.text[:200]}"
+        return data["choices"][0]["message"]["content"].strip()
+    except Exception as e:
+        return f"⚠️ Error: {e}"
+
