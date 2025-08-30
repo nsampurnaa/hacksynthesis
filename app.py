@@ -10,6 +10,15 @@ st.markdown(
 
 st.markdown(
     """
+**Autism Levels:**  
+- **Mild:** Minor difficulties with social interactions or communication, may need minimal support.  
+- **Moderate:** Noticeable difficulties in communication and behavior, may require structured support.  
+- **Severe:** Significant difficulties, requires intensive support and interventions.  
+"""
+)
+
+st.markdown(
+    """
 **Please describe things like:**  
 - Social interactions (eye contact, responding to name)  
 - Communication (speech, gestures, tone)  
@@ -25,7 +34,7 @@ user_input = st.text_area("Describe the child's behavior or concerns:", height=2
 if st.button("Get AI Suggestions") and user_input.strip():
     with st.spinner("Analyzing..."):
         prompt_detection = f"""
-You are an expert in child psychology. Based on the following observations, classify the autism level as 'mild', 'moderate', or 'severe', and briefly explain why:
+You are an expert in child psychology. Based on the following observations, classify the autism level into one of three stages: 'Mild', 'Moderate', or 'Severe'. Briefly explain why and reference the stage definitions:
 
 Observations:
 {user_input}
@@ -38,8 +47,8 @@ Provide 3-5 practical, parent-friendly strategies to support the child.
 """
         care_suggestions = ask_llm(prompt_care)
 
-    st.subheader("🧩 Autism Level Detection:")
-    st.write(autism_level_response)
+    st.subheader("🧩 Autism Level Detection (3 Stages):")
+    st.markdown(f"**Detected Stage:** {autism_level_response}")
 
     st.subheader("📌 Suggested Care Strategies:")
     st.write(care_suggestions)
