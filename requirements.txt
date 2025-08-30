@@ -1,6 +1,2 @@
 streamlit
-transformers
-torch
-datasets
-peft
-trl
+huggingface_hub
