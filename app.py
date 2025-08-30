@@ -26,7 +26,7 @@ st.markdown(
 - Interests and play style  
 - Reactions to changes or sensory input  
 - Any other unusual behavior you noticed
-🧩 DISCLAIMER: Mindpal: Autism Care Assistant is an educational tool designed to provide general guidance and strategies for learning about autism. It is not a medical or diagnostic tool. The observations and suggestions are intended for educational purposes only and should not replace professional evaluation, diagnosis, or treatment.
+-🧩 DISCLAIMER: Mindpal: Autism Care Assistant is an educational tool designed to provide general guidance and strategies for learning about autism. It is not a medical or diagnostic tool. The observations and suggestions are intended for educational purposes only and should not replace professional evaluation, diagnosis, or treatment.
 """
 )
 
