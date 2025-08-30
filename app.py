@@ -27,19 +27,20 @@ AI:
 """
     return prompt
 
-for msg in st.session_state.chat_history:
-    if msg["role"] == "user":
-        st.markdown(f"**You:** {msg['content']}")
-    else:
-        st.markdown(f"**AI:** {msg['content']}")
+chat_container = st.container()
+with chat_container:
+    for msg in st.session_state.chat_history:
+        if msg["role"] == "user":
+            st.markdown(f"**You:** {msg['content']}")
+        else:
+            st.markdown(f"**AI:** {msg['content']}")
 
 if st.session_state.conversation_active:
-    user_input = st.text_input("Your response:", value=st.session_state.user_input, key="input_box")
-    if st.button("Send") and user_input.strip():
-        st.session_state.chat_history.append({"role": "user", "content": user_input})
-        st.session_state.user_input = ""  # clear input box
+    st.session_state.user_input = st.text_input("Your response:", value=st.session_state.user_input, key="input_box")
+    if st.button("Send") and st.session_state.user_input.strip():
+        user_msg = st.session_state.user_input.strip()
+        st.session_state.chat_history.append({"role": "user", "content": user_msg})
+        st.session_state.user_input = ""
         prompt = get_ai_prompt(st.session_state.chat_history)
         ai_response = ask_llm(prompt)
         st.session_state.chat_history.append({"role": "ai", "content": ai_response})
-        if any(keyword in ai_response.lower() for keyword in ["conclusion:", "autism level:", "strategies:"]):
-            st.session_state.conversation_active = False
