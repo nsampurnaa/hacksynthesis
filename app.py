@@ -1,9 +1,9 @@
 import streamlit as st
 from llm import ask_llm
 
-st.set_page_config(page_title="HackSynthesis: Autism Care Assistant 🤖", page_icon="🤖")
+st.set_page_config(page_title="Mindpal: Autism Care Assistant 🤖", page_icon="🤖")
 
-st.title("HackSynthesis: Autism Care Assistant 🤖")
+st.title("Mindpal: Autism Care Assistant 🤖")
 st.markdown(
     "Enter your observations about a child’s behavior or symptoms, and the AI will suggest autism care strategies."
 )
