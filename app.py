@@ -6,31 +6,26 @@ st.set_page_config(page_title="Mindpal: Autism Care Assistant 🤖", page_icon="
 st.markdown(
     """
     <style>
-    /* Background */
     .stApp {
         background: linear-gradient(135deg, #f0f9ff, #cfe0fc, #fef6ff);
     }
 
-    /* Title */
     h1 {
         text-align: center;
         font-family: "Trebuchet MS", sans-serif;
-        color: #2a3d66;
+        color: #000000 !important;  /* Always black */
     }
 
-    /* Subheaders */
     h2, h3 {
         color: #30475e;
         font-family: "Verdana", sans-serif;
     }
 
-    /* Regular text */
     p, li {
         font-size: 16px;
         color: #222831;
     }
 
-    /* Text area */
     textarea {
         border-radius: 12px !important;
         border: 2px solid #6c63ff !important;
@@ -38,7 +33,6 @@ st.markdown(
         color: #222831 !important;
     }
 
-    /* Button */
     div.stButton > button {
         background: linear-gradient(90deg, #6c63ff, #4facfe);
         color: white;
@@ -55,7 +49,6 @@ st.markdown(
         transform: scale(1.05);
     }
 
-    /* Disclaimer */
     .disclaimer {
         font-size: 14px;
         color: #d90429;
