@@ -6,68 +6,89 @@ st.set_page_config(page_title="Mindpal: Autism Care Assistant 🤖", page_icon="
 st.markdown(
     """
     <style>
-    /* Background */
-    body {
-        background: linear-gradient(135deg, #e3f2fd, #fce4ec);
-        font-family: "Arial", sans-serif;
-        color: #333333;
+    .stApp {
+        background: linear-gradient(135deg, #f0f9ff, #cfe0fc, #fef6ff);
+        position: relative;
+        overflow: hidden;
     }
 
-    /* Titles */
-    h1, h2, h3 {
-        color: #2c3e50;
-        font-weight: 700;
+    .star {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle 3s infinite ease-in-out alternate;
     }
 
-    /* Markdown text */
-    .stMarkdown {
-        color: #37474f;
+    @keyframes twinkle {
+        from { opacity: 0.2; }
+        to { opacity: 1; }
+    }
+
+    h1 {
+        text-align: center;
+        font-family: "Trebuchet MS", sans-serif;
+        color: #2a3d66;
+    }
+
+    h2, h3 {
+        color: #30475e;
+        font-family: "Verdana", sans-serif;
+    }
+
+    p, li {
         font-size: 16px;
-        line-height: 1.6;
+        color: #222831;
     }
 
-    /* Text area */
     textarea {
-        background-color: #ffffff !important;
-        border: 2px solid #90caf9 !important;
-        border-radius: 10px !important;
-        font-size: 15px !important;
-        padding: 12px !important;
+        border-radius: 12px !important;
+        border: 2px solid #6c63ff !important;
+        background-color: #f9f9ff !important;
+        color: #222831 !important;
     }
 
-    /* Button */
     div.stButton > button {
-        background: linear-gradient(90deg, #42a5f5, #ec407a);
+        background: linear-gradient(90deg, #6c63ff, #4facfe);
         color: white;
-        border-radius: 10px;
-        padding: 10px 20px;
-        border: none;
         font-size: 16px;
-        font-weight: 600;
-        transition: 0.3s ease;
+        font-weight: bold;
+        border-radius: 12px;
+        border: none;
+        padding: 10px 24px;
+        transition: 0.3s;
     }
+
     div.stButton > button:hover {
-        background: linear-gradient(90deg, #1e88e5, #d81b60);
+        background: linear-gradient(90deg, #4facfe, #6c63ff);
         transform: scale(1.05);
     }
 
-    /* Subheaders */
-    h2 {
-        border-bottom: 2px solid #90caf9;
-        padding-bottom: 6px;
-        margin-top: 20px;
-    }
-
-    /* Result boxes */
-    .result-box {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 15px;
-        margin-top: 15px;
-        box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
-        border-left: 6px solid #42a5f5;
+    .disclaimer {
+        font-size: 14px;
+        color: #d90429;
+        font-style: italic;
+        padding: 12px;
+        border-left: 4px solid #d90429;
+        background: #fff5f5;
+        border-radius: 6px;
     }
     </style>
+
+    <script>
+    function createStars(numStars) {
+        for (let i = 0; i < numStars; i++) {
+            let star = document.createElement("div");
+            star.className = "star";
+            star.style.top = Math.random() * window.innerHeight + "px";
+            star.style.left = Math.random() * window.innerWidth + "px";
+            star.style.animationDuration = (2 + Math.random() * 3) + "s";
+            document.body.appendChild(star);
+        }
+    }
+    createStars(40);
+    </script>
     """,
     unsafe_allow_html=True
 )
@@ -95,10 +116,17 @@ st.markdown(
 - Interests and play style  
 - Reactions to changes or sensory input  
 - Any other unusual behavior you noticed  
-
-🧩 DISCLAIMER: *Mindpal: Autism Care Assistant* is an educational tool designed to provide general guidance and strategies for learning about autism.  
-It is **not** a medical or diagnostic tool. Always seek professional evaluation when in doubt.
 """
+)
+
+st.markdown(
+    """
+<div class="disclaimer">
+🧩 DISCLAIMER: Mindpal: Autism Care Assistant is an educational tool designed to provide general guidance and strategies for learning about autism.  
+It is not a medical or diagnostic tool. The observations and suggestions are intended for educational purposes only and should not replace professional evaluation, diagnosis, or treatment.
+</div>
+""",
+    unsafe_allow_html=True,
 )
 
 user_input = st.text_area("Describe the child's behavior or concerns:", height=200)
@@ -120,7 +148,7 @@ Provide 3-5 practical, parent-friendly strategies to support the child.
         care_suggestions = ask_llm(prompt_care)
 
     st.subheader("🧩 Autism Level Detection (3 Stages):")
-    st.markdown(f"<div class='result-box'><b>Detected Stage:</b> {autism_level_response}</div>", unsafe_allow_html=True)
+    st.markdown(f"**Detected Stage:** {autism_level_response}")
 
     st.subheader("📌 Suggested Care Strategies:")
-    st.markdown(f"<div class='result-box'>{care_suggestions}</div>", unsafe_allow_html=True)
+    st.write(care_suggestions)
