@@ -6,51 +6,31 @@ st.set_page_config(page_title="Mindpal: Autism Care Assistant 🤖", page_icon="
 st.markdown(
     """
     <style>
+    /* Background */
     .stApp {
         background: linear-gradient(135deg, #f0f9ff, #cfe0fc, #fef6ff);
-        position: relative;
-        overflow: hidden;
     }
 
-    .stars {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-    }
-
-    .star {
-        position: absolute;
-        width: 3px;
-        height: 3px;
-        background: white;
-        border-radius: 50%;
-        animation: twinkle 3s infinite ease-in-out alternate;
-    }
-
-    @keyframes twinkle {
-        from { opacity: 0.2; }
-        to { opacity: 1; }
-    }
-
+    /* Title */
     h1 {
         text-align: center;
         font-family: "Trebuchet MS", sans-serif;
         color: #2a3d66;
     }
 
+    /* Subheaders */
     h2, h3 {
         color: #30475e;
         font-family: "Verdana", sans-serif;
     }
 
+    /* Regular text */
     p, li {
         font-size: 16px;
         color: #222831;
     }
 
+    /* Text area */
     textarea {
         border-radius: 12px !important;
         border: 2px solid #6c63ff !important;
@@ -58,6 +38,7 @@ st.markdown(
         color: #222831 !important;
     }
 
+    /* Button */
     div.stButton > button {
         background: linear-gradient(90deg, #6c63ff, #4facfe);
         color: white;
@@ -74,6 +55,7 @@ st.markdown(
         transform: scale(1.05);
     }
 
+    /* Disclaimer */
     .disclaimer {
         font-size: 14px;
         color: #d90429;
@@ -84,23 +66,14 @@ st.markdown(
         border-radius: 6px;
     }
     </style>
-
-    <div class="stars">
-        <div class="star" style="top:10%; left:20%; animation-duration:2s;"></div>
-        <div class="star" style="top:30%; left:70%; animation-duration:3s;"></div>
-        <div class="star" style="top:50%; left:40%; animation-duration:4s;"></div>
-        <div class="star" style="top:80%; left:60%; animation-duration:2.5s;"></div>
-        <div class="star" style="top:15%; left:85%; animation-duration:3.5s;"></div>
-        <div class="star" style="top:65%; left:10%; animation-duration:4.5s;"></div>
-        <div class="star" style="top:75%; left:45%; animation-duration:2.2s;"></div>
-        <div class="star" style="top:25%; left:55%; animation-duration:3.8s;"></div>
-    </div>
     """,
     unsafe_allow_html=True
 )
 
 st.title("Mindpal: Autism Care Assistant 🤖")
-st.markdown("Enter your observations about a child’s behavior or symptoms, and the AI will suggest autism care strategies.")
+st.markdown(
+    "Enter your observations about a child’s behavior or symptoms, and the AI will suggest autism care strategies."
+)
 
 st.markdown(
     """
